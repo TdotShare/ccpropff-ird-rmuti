@@ -107,7 +107,7 @@
 
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
-        <b>Version</b> 1.7.0 - 09/2021
+        <b>Version</b> 2.0.0 - 07/2022 | Create @2021
       </div>
       <strong>Copyright &copy; <a href="https://ird.rmuti.ac.th/main/"> สถาบันวิจัยและพัฒนา 2021  </a></strong>
     </footer>

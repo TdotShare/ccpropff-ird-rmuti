@@ -187,13 +187,16 @@ $progressColor = "success";
                     <option value="1" {{$model->type_project == 1 ?  "selected" :  ""}}>ชุดโครงการ</option>
                     <option value="2" {{$model->type_project == 2 ?  "selected" :  ""}}>โครงการเดี่ยว</option>
                     @endif
-
                 </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>ประเภทนักวิจัย</label>
+                <input type="text" class="form-control" name="type_res" value="{{$model->type_res == 1 ? "นักวิจัยหน้าใหม่" : "นักวิจัยหน้าเก่า"}}" readonly >
             </div>
         </div>
 
 
-        <div class="form-row">
+        {{-- <div class="form-row">
             <div class="form-group col-md-12">
                 <label>นักวิจัย (หัวหน้าโครงการ) </label>
                 <select class="selectpicker form-control" name="res_id" data-live-search="true" data-size="6"
@@ -208,7 +211,8 @@ $progressColor = "success";
                         {{$resData->userLastNameTH}} ( {{$resData->userID}} )</option>
                 </select>
             </div>
-        </div>
+        </div> --}}
+        
     </div>
 </div>
 

@@ -26,8 +26,11 @@ Route::group(['prefix' =>  '/auth'], function () {
         return view('auth.login');
     })->name('login_index_page');
 
-    Route::post('/login', "AuthenticationController@actionLogin")->name('login_data');
+    //Route::post('/login', "AuthenticationController@actionLogin")->name('login_data');
     Route::get('/logout', "AuthenticationController@actionLogout")->name('logout_data');
+
+    Route::get('/rmuti', 'AuthenticationController@actionHomeRMUTILogin')->name("login_rmuti_page");
+    Route::get('/login_rmuti', 'AuthenticationController@actionLoginRmuti')->name("login_rmuti_data");
     
 });
 
@@ -35,7 +38,7 @@ Route::get('/', function () {
     return redirect()->route("dashboard_index_page");
 });
 
-Route::group(['prefix' =>  '/dashboard', 'middleware' => ['guest' , 'counter']], function () {
+Route::group(['prefix' =>  $backend . '/dashboard', 'middleware' => ['guest' , 'counter']], function () {
     Route::get('/', "DashboardController@actionIndex")->name('dashboard_index_page');
 });
 
@@ -118,8 +121,9 @@ Route::group(['prefix' =>  $backend . '/topic', 'middleware' => ['guest' , 'admi
     Route::post('/update', "TopicController@actionUpdate")->name('topic_update_data');
 });
 
-
-
+Route::group(['prefix' =>  $backend . '/account', 'middleware' => ['guest' , 'admin' , 'counter']], function () {
+    Route::get('/', "AccountController@actionIndex")->name('account_index_page');
+});
 
 Route::group(['prefix' =>  $backend . '/project', 'middleware' => ['guest' , 'admin' , 'counter']], function () {
     Route::get('/{id}', "CheckedController@actionIndex")->name('checked_index_page');

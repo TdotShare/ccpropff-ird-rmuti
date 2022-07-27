@@ -64,6 +64,20 @@ $breadcrumb = [
 
 </div>
 
+<hr />
+
+<div class="alert alert-secondary" role="alert">
+    <h4 class="alert-heading">Update System - 27/07/2022 (NEW)</h4>
+    <hr>
+      <ul>
+        <li>นำระบบ Login Nriis ออก และเปลี่ยนไปใช้ระบบ Login Rmuti แทน</li>
+        <li>เพิ่มฟิลด์ นักวิจัยหน้าใหม่ -เก่า</li>
+        <li>ปรับให้มองเห็นโครงการวิจัยเฉพาะปีนั้นๆ </li>
+        <li>เพิ่มเงื่อนไขการเพิ่มโครงการ</li>
+      </ul>
+</div>
+  
+
 
 @endsection
 

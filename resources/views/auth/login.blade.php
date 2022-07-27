@@ -52,9 +52,10 @@
 
                 @endif
 
+                <a href="{{route("login_rmuti_page")}}"><button  class="btn btn-warning btn-block"> <i class="fas fa-university"></i> Login With RMUTI</button></a>
 
 
-                <form action={{route("login_data")}} method="post">
+                {{-- <form action={{route("login_data")}} method="post">
                     {{ csrf_field() }}
 
 
@@ -102,7 +103,7 @@
                                 class="btn btn-danger btn-block"><i class="fas fa-bell"></i> อ่านก่อนเข้าใช้งาน</button>
                         </div>
                     </div>
-                </form>
+                </form> --}}
 
             </div>
             <!-- /.login-card-body -->

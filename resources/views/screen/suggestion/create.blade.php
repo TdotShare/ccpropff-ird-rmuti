@@ -99,40 +99,21 @@ $breadcrumb])
                 <div class="form-group col-md-6">
                     <label>ประเภทโครงการ <span style="color: red;">****</span></label>
                     <select class="custom-select" name="type_project" required>
-                        <option value="" selected>เลือกประเภทโครงการ</option>
-                        <option value="1">ชุดโครงการ</option>
-                        <option value="2">โครงการเดี่ยว</option>
+                        {{-- <option value="" selected>เลือกประเภทโครงการ</option> --}}
+                        {{-- <option value="1" disabled>ชุดโครงการ</option> --}}
+                        <option value="2" selected>โครงการเดี่ยว</option>
                     </select>
                 </div>
-                {{-- <div class="form-group col-md-4">
-                    <label>ปีงบประมาณเริ่มต้น <span style="color: red;">****</span></label>
-                    <select class="custom-select" name="time_startproject" required>
-                        <option value="" selected>เลือกปีงบประมาณเริ่มต้น</option>
-                        @for ($i = 2564; $i <= date("Y") + 543; $i++) <option value="{{$i}}">{{$i}}</option>
-                @endfor
-                </select>
+                <div class="form-group col-md-6">
+                    <label>ประเภทนักวิจัย <span style="color: red;">****</span></label>
+                    <select class="custom-select" name="type_res" required>
+                        <option value="" selected>เลือกประเภทนักวิจัย</option>
+                        <option value="1" >นักวิจัยหน้าใหม่</option>
+                        <option value="2" >นักวิจัยหน้าเก่า</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <label>ปีงบประมาณสิ้นสุด <span style="color: red;">****</span></label>
-                <select class="custom-select" name="time_endproject" required>
-                    <option value="" selected>เลือกปีงบประมาณเริ่มต้น</option>
-                    @for ($i = 2564; $i <= date("Y") + 543; $i++) <option value="{{$i}}">{{$i}}</option>
-                        @endfor
-                </select>
-            </div> --}}
-    </div>
 
-    {{-- <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label>นักวิจัย (หัวหน้าโครงการ) <span style="color: red;">****</span></label>
-                    <select class="selectpicker form-control" name="res_id" data-live-search="true" data-size="6" title="เลือกนักวิจัย (หัวหน้าโครงการ)"  required>
-                        @foreach (\App\Model\Researcher::all() as $item)
-                        <option value="{{$item->userIDCard}}">{{$item->titleName}}{{$item->userRealNameTH}}
-    {{$item->userLastNameTH}} ( {{$item->userID}} )</option>
-    @endforeach
-    </select>
-</div>
-</div> --}}
 
 
 
@@ -150,7 +131,8 @@ $breadcrumb])
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <script>
-    $(function () {
+    
+$(function () {
     $('selectpicker').selectpicker();
 });
 

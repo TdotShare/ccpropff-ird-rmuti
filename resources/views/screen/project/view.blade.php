@@ -124,9 +124,13 @@ $breadcrumb = [
                         @endif
                     </select>
                 </div>
+                <div class="form-group col-md-6">
+                    <label>ประเภทนักวิจัย</label>
+                    <input type="text" class="form-control" name="type_res" value="{{$model->type_res == 1 ? "นักวิจัยหน้าใหม่" : "นักวิจัยหน้าเก่า"}}" readonly >
+                </div>
             </div>
 
-            <div class="form-row">
+            {{-- <div class="form-row">
                 <div class="form-group col-md-12">
                     <label>นักวิจัย (หัวหน้าโครงการ) <span style="color: red;">****</span></label>
                     <select class="custom-select" name="res_id" disabled>
@@ -143,7 +147,7 @@ $breadcrumb = [
 
                     </select>
                 </div>
-            </div>
+            </div> --}}
 
 
         </div>

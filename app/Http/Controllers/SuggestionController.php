@@ -59,7 +59,7 @@ class SuggestionController extends Controller
                 return $this->responseRedirectBack("ไม่สามารถเข้าถึงโครงการได้เนื่องจากหมดระยะเวลาแล้ว !", "warning");
             }
 
-            $projectData = Ptmain::where("create_by", "=", session("idcard"))->where("type_project", "!=", 3)->get();
+            $projectData = Ptmain::where("topic_id" , '=' , $model->id )->where("create_by", "=", session("idcard"))->where("type_project", "!=", 3)->get();
             return view("screen.suggestion.view", ["model" => $model, "projectData" => $projectData]);
         } else {
             return $this->responseRedirectBack("ไม่พบข้อมูลที่เรียกใช้งาน !", "warning");
@@ -221,6 +221,7 @@ class SuggestionController extends Controller
             $model->time_startproject = 0; //ไม่ใช่รอทำการลบ
             $model->time_endproject = 0; //ไม่ใช่รอทำการลบ
 
+            $model->type_res = $request->type_res;
             $model->roadmap_id = null;
             $model->indicators_id = null;
             $model->create_by = session("idcard");

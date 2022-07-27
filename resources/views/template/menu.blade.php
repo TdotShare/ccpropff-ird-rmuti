@@ -11,9 +11,11 @@ $menuUser = [
 //   ["name" => "จัดการห้องประชุม", "menu" => null , "url" => route("reserveroom_admin_index_page")  , "icon" => "fas fa-users" , "path" => "/admin/reserveroom"] ,
 
 $menuAdmin = [
+    ["name" => "ภาพรวมระบบ", "menu" => null , "url" => route("dashboard_index_page") , "icon" => "fas fa-th" , "path" => "/admin/dashboard"] ,
     ["name" => "ระยะเวลาขอยื่นข้อเสนอ", "menu" => null , "url" => route("topic_index_page") , "icon" => "fas fa-calendar" , "path" => "/admin/topic"] ,
     ["name" => "คณะ", "menu" => null , "url" => route("faculty_index_page") , "icon" => "fas fa-object-group" , "path" => "/admin/faculty"] ,
     ["name" => "แผนงาน", "menu" => null , "url" => route("roadmaps_index_page") , "icon" => "fas fa-map-signs" , "path" => "/admin/roadmaps"] ,
+    ["name" => "ผู้ใช้งาน", "menu" => null , "url" => route("account_index_page") , "icon" => "fas fa-users" , "path" => "/admin/account"] ,
     ["name" => "ระบบประเมิน FF", "menu" => null , "url" => "https://mis-ird.rmuti.ac.th/assesscpff/auth" , "icon" => "fas fa-star" , "path" => "/admin/admin"] ,
 ];
 
