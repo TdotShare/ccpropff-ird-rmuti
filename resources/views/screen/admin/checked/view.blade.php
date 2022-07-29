@@ -156,23 +156,23 @@ $progressColor = "success";
             </div>
         </div>
 
+        @php
+        $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first();
+        @endphp
+        
+        @if ($resData)
 
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
                 <label>นักวิจัย (หัวหน้าโครงการ) </label>
-                <select class="selectpicker form-control" name="res_id" data-live-search="true" data-size="6"
-                    title="เลือกนักวิจัย (หัวหน้าโครงการ)" disabled>
-
-                    @php
-                    $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first()
-                    @endphp
-
-                    <option value="{{$resData->userIDCard}}" selected>
-                        {{$resData->titleName}}{{$resData->userRealNameTH}}
-                        {{$resData->userLastNameTH}} ( {{$resData->userID}} )</option>
-                </select>
+                <input type="text" class="form-control" name="res_id" 
+                value="{{$resData->titleName}}{{$resData->userRealNameTH}} {{$resData->userLastNameTH}}" readonly>
             </div>
         </div>
+            
+        @endif
+
+
 
         <hr>
 

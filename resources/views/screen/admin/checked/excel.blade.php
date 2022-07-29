@@ -84,9 +84,6 @@
                 <th rowspan="2">ผู้ร่วมวิจัย</th>
                 <th rowspan="2">คณะ</th>
                 <th colspan="2">ความสอดคล้องของแผนงานและตัวชี้วัด</th>
-                {{-- <th rowspan="2">หลักการและเหตุผล</th>
-                <th rowspan="2">วัตถุประสงค์</th>
-                <th rowspan="2">กลุ่มเป้าหมาย</th> --}}
                 <th rowspan="2">Output</th>
                 <th rowspan="2">Outcome</th>
                 <th rowspan="2">Impact</th>
@@ -150,9 +147,6 @@
                 </td>
                 <td>@if ($roadmapData) {{$roadmapData->name}} @endif</td>
                 <td>@if ($indicatorsData) {{$indicatorsData->name}} @endif</td>
-                {{-- <td>{{$item->reason_content}}</td>
-                <td>{{$item->objective_content}}</td>
-                <td>{{$item->target_content}}</td> --}}
                 <td>{{$item->output_content}}</td>
                 <td>{{$item->outcome_content}}</td>
                 <td>{{$item->impact_content}}</td>

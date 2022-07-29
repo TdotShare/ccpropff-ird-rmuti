@@ -23,13 +23,13 @@ class OverviewController extends Controller
 
         if ($model) {
 
-            if($model->create_by != session("idcard")){
+            if ($model->create_by != session("idcard")) {
                 return $this->responseRedirectBack("คุณไม่สามารถเข้าถึงข้อเสนอโครงการ ที่คุณไม่ได้สร้างได้ !", "warning");
             }
 
-            $topicdata = Topic::find($model->topic_id); 
+            $topicdata = Topic::find($model->topic_id);
 
-            if($topicdata->status == 2){
+            if ($topicdata->status == 2) {
                 return $this->responseRedirectBack("ไม่สามารถเข้าถึงโครงการได้เนื่องจากหมดระยะเวลาแล้ว !", "warning");
             }
 
@@ -79,8 +79,16 @@ class OverviewController extends Controller
                     if ($data_files_checked->template_docx_st == 1) $data_point_sp++;
                     if ($data_files_checked->template_pdf_st == 1) $data_point_sp++;
                 }
-
             }
+
+
+            if ($model->type_res == null) {
+                $model['type_res_name'] = "";
+            } else {
+                $model['type_res_name'] = $model->type_res == 1 ? "ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ" : "ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล";
+            }
+
+
 
             return view("screen.project.overview", [
                 "model" => $model,
@@ -104,7 +112,7 @@ class OverviewController extends Controller
 
         if ($model) {
 
-            if($model->create_by != session("idcard")){
+            if ($model->create_by != session("idcard")) {
                 return $this->responseRedirectBack("คุณไม่สามารถเข้าถึงข้อเสนอโครงการ ที่คุณไม่ได้สร้างได้ !", "warning");
             }
 
@@ -154,8 +162,14 @@ class OverviewController extends Controller
                     if ($data_files_checked->template_docx_st == 1) $data_point_sp++;
                     if ($data_files_checked->template_pdf_st == 1) $data_point_sp++;
                 }
-
             }
+
+            if ($model->type_res == null) {
+                $model['type_res_name'] = "";
+            } else {
+                $model['type_res_name'] = $model->type_res == 1 ? "ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ" : "ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล";
+            }
+
 
 
             return view("screen.project.preview.index", [

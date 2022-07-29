@@ -47,6 +47,13 @@ class ProjectController extends Controller
                 $fileForceModel->save();
             }
 
+            
+            if ($model->type_res == null) {
+                $model['type_res_name'] = "";
+            } else {
+                $model['type_res_name'] = $model->type_res == 1 ? "ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ" : "ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล";
+            }
+
             $this->actionCreateFolder($model);
 
             return view("screen.project.view", ["model" => $model, "fileForceData" => $fileForceData ? $fileForceData : $fileForceModel]);

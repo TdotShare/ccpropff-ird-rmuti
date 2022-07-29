@@ -54,6 +54,7 @@ $breadcrumb = [
                         <th scope="col">ชื่อทุนที่ยืนขอ</th>
                         <th scope="col">งบประมาณที่ใช้ (บาท)</th>
                         <th scope="col">ประเภทโครงการ</th>
+                        <th scope="col">ประเภททุน</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +70,11 @@ $breadcrumb = [
 
                         <td>{{number_format($item->budget)}}</td>
                         <td>{{$item->type_project == 1 ? "ชุดโครงการ" : "โครงการเดี่ยว"}}</td>
+                        <td>
+                            @if ($item->type_res)
+                                {{$item->type_res == 1 ? "ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ" : "ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล"}}                                
+                            @endif                
+                        </td>
                     </tr>
 
                     @php
@@ -84,6 +90,11 @@ $breadcrumb = [
                         <td></td>
                         <td>{{number_format($el->budget)}}</td>
                         <td>โครงการย่อย</td>
+                        <td>
+                            @if ($item->type_res)
+                                {{$item->type_res == 1 ? "ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ" : "ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล"}}                                
+                            @endif                
+                        </td>
                     </tr>
 
                     @endforeach

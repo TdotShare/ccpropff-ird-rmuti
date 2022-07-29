@@ -21,7 +21,7 @@ $breadcrumb = [
 
 @section('breadcrumb')
 
-@component('common.breadcrumb' , [ "name" => "$model->name_th - ประวัติการได้รับทุนวิจัย" , "breadcrumb" =>
+@component('common.breadcrumb' , [ "name" => "ประวัติการได้รับทุนวิจัย" , "breadcrumb" =>
 $breadcrumb])
 
 @endcomponent
@@ -72,11 +72,14 @@ $breadcrumb])
 
 <div class="card">
     <div class="card-body">
-        <span style="color: red;">คำชี้แจง : โปรดระบุประวัติการได้รับทุนวิจัยของท่าน 3 ปีย้อนหลัง ซึ่งประกอบด้วย
-            งบประมาณรายจ่าย งบประมาณ Fundamental Fund งบประมาณเงินรายได้</span>
+        <span style="color: red;">คำชี้แจง  </span>
+        <ol style="color: red;">
+            <li>โปรดระบุประวัติการได้รับทุนวิจัยของท่าน 3 ปี ย้อนหลัง ตั้งแต่ปีงบประมาณ 2562-2564  ซึ่งประกอบด้วย ทุนรายจ่าย , ทุน Fundamental Fund และทุนเงินรายได้ </li>
+            <li>นักวิจัยที่มีโครงการวิจัยทุน Fundamental Fund และทุนเงินรายได้ ประจำปีงบประมาณ 2565 ที่กำลังดำเนินการ ต้องแนบหนังสือรับรองการปิดทุนในระบบด้วย </li>
+        </ol>
         <div style="padding-bottom: 1%;"></div>
 
-        <form action="{{ route("fund_create_data") }}" method="post">
+        <form action="{{ route("fund_create_data") }}" enctype="multipart/form-data" method="post">
 
             {{ csrf_field() }}
 
@@ -128,6 +131,12 @@ $breadcrumb])
                     </select>
                 </div>
 
+                <div class="form-group col-md-12">
+                    <label>เอกสารแนบ </label>
+                    <small style="color: red;">กรณีที่ท่านมีโครงการวิจัยที่กำลังดำเนินการในปี งปม.2565 ต้องแนบหนังสือรับรองยืนยันการปิดทุนในระบบด้วย </small>
+                    <input type="file" name="file_fund" class="form-control" accept=".pdf">
+                </div>
+
                 <button class="btn btn-outline-primary btn-block"><i class="fas fa-plus"></i> เพิ่มข้อมูล</button>
         </form>
 
@@ -145,6 +154,7 @@ $breadcrumb])
                         <th scope="col">แหล่งทุน</th>
                         <th scope="col">งบประมาณ (บาท)</th>
                         <th scope="col">ปีงบประมาณ</th>
+                        <th scope="col">ไฟล์แนบ</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -163,6 +173,7 @@ $breadcrumb])
                         </td>
                         <td>{{number_format($item->budget)}}</td>
                         <td>{{$item->year}}</td>
+                        <td>@if ($item->file) <a target="_blank" href="{{URL::asset("upload/fund/$model->id-$model->res_id/$item->file")}}">{{$item->file}}</a> @endif </td>
                         <td><a href="{{route("fund_delete_data" , ["id" => $item->id ])}}"  onclick="return confirm('คุณต้องการลบข้อมูล ใช่หรือไม่ ?');"> <button
                                     class="btn btn-block btn-danger"><i class="fas fa-trash"></i>
                                     ลบข้อมูล</button></a></td>

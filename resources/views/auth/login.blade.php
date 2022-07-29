@@ -54,106 +54,12 @@
 
                 <a href="{{route("login_rmuti_page")}}"><button  class="btn btn-warning btn-block"> <i class="fas fa-university"></i> Login With RMUTI</button></a>
 
-
-                {{-- <form action={{route("login_data")}} method="post">
-                    {{ csrf_field() }}
-
-
-                    <div class="input-group mb-3">
-
-                        <select class="form-control" name="statusUser" required>
-                            <option value="">สถานะผู้ใช้งาน</option>
-                            <option value="user" selected>นักวิจัย</option>
-                            <option value="admin">เจ้าหน้าที่</option>
-                        </select>
-
-
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <i class="fas fa-user-friends"></i>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <input type="text" name="username" class="form-control" placeholder="กรอก E-mail" required>
-
-
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="กรอก บัตรประชาชน"
-                            required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i>
-                                เข้าสู่ระบบ</button>
-                            <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                class="btn btn-danger btn-block"><i class="fas fa-bell"></i> อ่านก่อนเข้าใช้งาน</button>
-                        </div>
-                    </div>
-                </form> --}}
-
             </div>
             <!-- /.login-card-body -->
         </div>
     </div>
     <!-- /.login-box -->
 
-    <div style="padding-bottom: 1%"></div>
-    <center>
-        <h4><span style="color: red;">คำชี้แจง</span> โครงการที่จะยื่นเสนอขอทุน Fundamental Fund ประจำปีงบประมาณ พ.ศ.
-            2566 ต้องมีลักษณะ ดังนี้ </h4>
-    </center>
-
-    <ol>
-        <li>การเสนอขอรับงบประมาณทุนมูลฐาน Fundamental Fund ประจำปีงบประมาณ พ.ศ. 2566
-            ให้เสนอในลักษณะโครงการเดี่ยวเท่านั้น</li>
-        <li>ในกรณีที่มีความจำเป็นต้องจัดทำโครงการที่มีขนาดใหญ่ เพื่อตอบโจทย์ปัญหาสำคัญ และให้ได้ output / outcome /
-            impact <br>ที่มีประสิทธิภาพสูง สามารถจัดทำเป็นชุดโครงการได้ แต่ต้องปรับโครงการย่อยเป็นกิจกรรมต่างๆ
-            ภายใต้ชุดโครงการนั้น</li>
-        <li>ในกรณีชุดโครงการ การทำสัญญารับทุนวิจัยระหว่างแหล่งทุนกับมหาวิทยาลัย
-            และสัญญารับทุนระหว่างมหาวิทยาลัยกับนักวิจัย <br> จะทำสัญญาเพียงฉบับเดียว กล่าวคือ
-            จะทำสัญญากับหัวหน้าชุดโครงการ
-            (ผู้รับผิดชอบหลัก มีสถานะเป็นหัวหน้าโครงการ)<br> ส่วนนักวิจัยที่เป็นหัวหน้ากิจกรรมต่างๆ
-            จะมีสถานะเป็นผู้ร่วมวิจัยในสัญญารับทุนเท่านั้น</li>
-    </ol>
-
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">ก่อนเข้าใช้งาน ระบบ</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <span>นักวิจัยที่จะสามารถยื่นข้อเสนอโครงการได้ ต้องมีฐานข้อมูลในระบบ NRIIS
-                        และนักวิจัยสามารถเข้าใช้งานระบบนี้ได้ด้วยข้อมูลดังต่อไปนี้
-                        <br>
-                        User คือ อีเมลที่ลงทะเบียนไว้ในระบบ NRIIS <br>
-                        Password คือ รหัสบัตรประชาชน</span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- jQuery -->
     <script src={{URL::asset("template/plugins/jquery/jquery.min.js")}}></script>

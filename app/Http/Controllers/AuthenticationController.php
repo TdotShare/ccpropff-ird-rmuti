@@ -78,6 +78,19 @@ class AuthenticationController extends Controller
 
             try {
 
+                if (!$adminData->CheckedAuthenAdmin($data->uid)) {
+                    $res_card_id =  Researcher::where("userIDCard", "=", $data->personalId)->first();
+                    if (!$res_card_id) {
+                        return redirect('https://mis-ird.rmuti.ac.th/sso/auth/logout?url=' . route("login_index_page"))->with(
+                            [
+                                "message" => 'บัญชีใช้งานของคุณ ไม่มีชื่ออยู่ในฐานข้อมูล nriis กรุณาติดต่อเจ้าหน้าที่ !',
+                                "status" => 'warning',
+                                "alert" => true
+                            ]
+                        );
+                    }
+                }
+
                 $model = UserAuthen::where("user_uid", '=', $data->uid)->first();
 
                 if (!$model) {
@@ -102,7 +115,7 @@ class AuthenticationController extends Controller
                 session(['username' => $data->uid]);
                 session(['idcard' => $data->personalId]);
                 session(['title' => $model->prename]);
-                session(['fullname' => $data->cn . " " . $data->sn]);
+                session(['fullname' => $data->firstNameThai . " " . $data->lastNameThai]);
                 session(['email' => $data->mail]);
                 session(['role' => $adminData->CheckedAuthenAdmin($data->uid) ? "admin" : "user"]);
                 session(['super' => $adminData->CheckedAuthenSuper($data->uid) ? true : false]);

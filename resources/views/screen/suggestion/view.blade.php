@@ -62,7 +62,8 @@ $breadcrumb])
                         <th scope="col">ชื่อโครงการ</th>
                         <th scope="col">งบประมาณที่ใช้ (บาท)</th>
                         <th scope="col">ประเภทโครงการ</th>
-                        <th scope="col">ประเภทนักวิจัย</th>
+                        <th scope="col">ประเภททุน</th>
+                        <th scope="col">ความสมบูรณ์ของข้อมูลที่กรอก</th>
                         @if ($model->round == 2)
                         <th scope="col">สถานะการส่งโครงการ</th>
                         @endif
@@ -84,7 +85,8 @@ $breadcrumb])
                         <td><a href="{{route("preview_view_page" , ["id" => $item->id ])}}">{{$item->name_th}}</a></td>
                         <td>{{number_format($item->budget)}}</td>
                         <td>{{$item->type_project == 1 ? "ชุดโครงการ" : "โครงการเดี่ยว"}}</td>
-                        <td>{{$item->type_res == 1 ? "นักวิจัยหน้าใหม่" : "นักวิจัยหน้าเก่า"}}</td>
+                        <td>{{$item->type_res_name}}</td>
+                        <td class="bg-{{$item->progress_project['progressColor']}} text-white" >{{$item->progress_project['percent']}}%</td>
                         @if ($model->round == 2)
                         <td>{{$item->round == 1 ? "โครงการของคุณผ่านการตรวจสอบแล้ว" : "กรุณาแก้ไขโครงการเพิ่มตามที่เจ้าหน้าที่แนะนำ"}}</td>
                         @endif

@@ -21,7 +21,7 @@ $breadcrumb = [
 
 @section('breadcrumb')
 
-@component('common.breadcrumb' , [ "name" => "$model->name_th - ผู้ร่วมวิจัย" , "breadcrumb" => $breadcrumb])
+@component('common.breadcrumb' , [ "name" => "ผู้ร่วมวิจัย" , "breadcrumb" => $breadcrumb])
 
 @endcomponent
 
@@ -138,8 +138,7 @@ $breadcrumb = [
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (\App\Model\Coresearcher::where("cpff_pt_id" , "=" , $model->id)->get() as $index => $item
-                    )
+                    @foreach (\App\Model\Coresearcher::where("cpff_pt_id" , "=" , $model->id)->get() as $index => $item)
 
                     @php
                     $facultyData = \App\Model\Faculty::find($item->faculty_id);

@@ -21,7 +21,7 @@ $breadcrumb = [
 
 @section('breadcrumb')
 
-@component('common.breadcrumb' , [ "name" => "$model->name_th - ทรัพย์สินทางปัญญา" , "breadcrumb" =>
+@component('common.breadcrumb' , [ "name" => "ทรัพย์สินทางปัญญา" , "breadcrumb" =>
 $breadcrumb])
 
 @endcomponent
@@ -90,7 +90,7 @@ $breadcrumb])
                 <div class="form-group col-md">
                     <label>ประเภท</label>
                     <select class="custom-select" name="type" required>
-                        <option value="" selected>เลือกแหล่งทุน</option>
+                        <option value="" selected>เลือกประเภท</option>
                         <option value="อนุสิทธิบัตร">อนุสิทธิบัตร</option>
                         <option value="สิทธิบัตร">สิทธิบัตร</option>
                     </select>

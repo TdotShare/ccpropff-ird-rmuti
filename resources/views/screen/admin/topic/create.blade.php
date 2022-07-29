@@ -14,11 +14,6 @@ $breadcrumb = [
 
 @section('script_header')
 
-{{-- <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
-    integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
-
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 @endsection
@@ -68,18 +63,6 @@ $breadcrumb = [
                             @endfor
                     </select>
                 </div>
-                {{-- <div class="form-group col-md-6">
-                    <label>ระยะเวลาสิ้นสุดการรับข้อเสนอ</label>
-                    <div class="input-group mb-6">
-                        <input id="datetimepicker" class="date form-control" name="endtime" type="text">
-
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <i class="fas fa-calendar-week"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
 
             </div>
             <div class="row">
@@ -93,7 +76,7 @@ $breadcrumb = [
                         </div>
                         <input type="text" class="form-control float-right" id="datetimepicker">
                     </div>
-                    <!-- /.input group -->
+
                 </div>
 
 
@@ -111,23 +94,12 @@ $breadcrumb = [
 
 @section('script_footer')
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
-    integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-{{-- <script>
-    $('#datetimepicker').datepicker({
-        autoclose: true,
-        format: "yyyy-mm-dd",
-        format: 'HH:mm'
-        immediateUpdates: true,
-        todayBtn: "linked",
-        todayHighlight: true,
-    });
-</script> --}}
+
 
 <script>
     $(function() {

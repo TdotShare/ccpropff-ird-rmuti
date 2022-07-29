@@ -46,9 +46,28 @@ class FundController extends Controller
     public function actionCreate(Request $request)
     {
         try {
-            $ptman = Ptmain::find($request->id);
+            $ptmain = Ptmain::find($request->id);
+            $fileName  = null;
 
-            if ($ptman) {
+            if ($ptmain) {
+
+                if($request->year == 2565){
+                    if(!$request->file("file_fund")){
+                        return $this->responseRedirectBack("ในกรณีที่คุณเลือก ปีงบประมาณ 2565 คุณจำปิดต้องแนบไฟล์แบบยืนยันการปิดทุน !", "warning"); 
+                    }else{
+
+                        if($request->file("file_fund")->getSize() < 31457280){
+
+                            $fileName =  $this->generateRandomString() . '.' . $request->file("file_fund")->getClientOriginalExtension();
+                            $request->file("file_fund")->move(public_path("upload/fund/$ptmain->id-$ptmain->res_id"), $fileName);
+    
+                        }else{
+                            return $this->responseRedirectBack("ไฟล์มีขนาดมากกว่า 30 mb กรุณาลดขนาดไฟล์", "warning");
+                        }
+
+                    }
+                }
+
 
                 $model = new Fund();
                 $model->cpff_pt_id = $request->id;
@@ -56,6 +75,7 @@ class FundController extends Controller
                 $model->type = $request->type;
                 $model->budget = $request->budget;
                 $model->year = $request->year;
+                $model->file = $fileName;
 
                 $model->save();
 
@@ -72,11 +92,39 @@ class FundController extends Controller
     {
         $model = Fund::find($id);
 
+
+        if(!$model){
+            return $this->responseRedirectBack("ไม่พบข้อมูลแหล่งทุนที่ต้องการลบ !", "warning");
+        }
+
+        $ptmain = Ptmain::find($model->cpff_pt_id);
+
+        if(!$ptmain){
+            return $this->responseRedirectBack("ไม่พบข้อมูลแหล่งทุนที่ต้องการลบ !", "warning");
+        }
+
+        if (is_file(public_path("upload/fund/$ptmain->id-$ptmain->res_id/$model->file"))) {
+            unlink(public_path("upload/fund/$ptmain->id-$ptmain->res_id/$model->file"));
+        }
+
         if ($model->delete()) {
             return $this->responseRedirectBack("ลบข้อมูลแหล่งทุนเรียบร้อย !");
         } else {
             return $this->responseRedirectBack("ไม่พบข้อมูลแหล่งทุนที่ต้องการลบ !", "warning");
         }
+
+
+    }
+
+    function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     protected function responseRedirectBack($message, $status = "success", $alert = true)

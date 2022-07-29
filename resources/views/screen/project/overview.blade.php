@@ -18,7 +18,7 @@ $breadcrumb = [
 
 @section('breadcrumb')
 
-@component('common.breadcrumb' , [ "name" => "$model->name_th - ภาพรวมข้อมูล" , "breadcrumb" => $breadcrumb])
+@component('common.breadcrumb' , [ "name" => "ภาพรวมข้อมูล" , "breadcrumb" => $breadcrumb])
 
 @endcomponent
 
@@ -101,11 +101,6 @@ if($model->output_content)$pointScore++;
 if($model->outcome_content)$pointScore++;
 if($model->impact_content)$pointScore++;
 
-// if(count($articledata) > 0)$pointScore++;
-// if(count($conferencedata) > 0)$pointScore++;
-// if(count($intelipdata) > 0)$pointScore++;
-// if(count($funddata) > 0)$pointScore++;
-
 
 if($fileForceData->template_docx_st == 1)$pointScore++;
 if($fileForceData->template_pdf_st == 1)$pointScore++;
@@ -131,7 +126,7 @@ $progressColor = "success";
 
 <div class="row">
     <div class="col-8">
-        <p>ความสมบูรณของข้อมูลที่กรอก</p>
+        <p>ความสมบูรณ์ของข้อมูลที่กรอก</p>
         <div class="progress">
             <div class="progress-bar bg-{{$progressColor}}" role="progressbar" style="width: {{$percent}}%"
                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
@@ -190,28 +185,29 @@ $progressColor = "success";
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label>ประเภทนักวิจัย</label>
-                <input type="text" class="form-control" name="type_res" value="{{$model->type_res == 1 ? "นักวิจัยหน้าใหม่" : "นักวิจัยหน้าเก่า"}}" readonly >
+                <label>ประเภททุน</label>
+                <input type="text" class="form-control" name="type_res" value="{{$model->type_res_name}}" readonly >
             </div>
         </div>
 
+        @php
+        $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first();
+        @endphp
+        
+        @if ($resData)
 
-        {{-- <div class="form-row">
-            <div class="form-group col-md-12">
+        <div class="form-row">
+            <div class="form-group col-md">
                 <label>นักวิจัย (หัวหน้าโครงการ) </label>
-                <select class="selectpicker form-control" name="res_id" data-live-search="true" data-size="6"
-                    title="เลือกนักวิจัย (หัวหน้าโครงการ)" disabled>
-
-                    @php
-                    $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first()
-                    @endphp
-
-                    <option value="{{$resData->userIDCard}}" selected>
-                        {{$resData->titleName}}{{$resData->userRealNameTH}}
-                        {{$resData->userLastNameTH}} ( {{$resData->userID}} )</option>
-                </select>
+                <input type="text" class="form-control" name="res_id" 
+                value="{{$resData->titleName}}{{$resData->userRealNameTH}} {{$resData->userLastNameTH}}" readonly>
             </div>
-        </div> --}}
+        </div>
+            
+        @endif
+
+
+
         
     </div>
 </div>
@@ -521,9 +517,7 @@ $progressColor = "success";
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (\App\Model\Coresearcher::where("cpff_pt_id" , "=" , $model->id)->get() as $index
-                    => $item
-                    )
+                    @foreach (\App\Model\Coresearcher::where("cpff_pt_id" , "=" , $model->id)->get() as $index=> $item)
 
                     @php
                     $facultyData = \App\Model\Faculty::find($item->faculty_id);

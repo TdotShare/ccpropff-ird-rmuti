@@ -154,6 +154,9 @@ Route::group(['prefix' =>  '/publish', 'middleware' => ['guest' , 'counter']], f
 
     Route::post('/conference_create', "PublishController@actionCreateConference")->name('publish_create_conference_data');
     Route::get('/conference_delete/{ptmain_id}/{confer_id}', "PublishController@actionDeleteConference")->name('publish_delete_conference_data');
+
+
+    Route::post('/dbpub_update', "PublishController@actionUpdateDBPublish")->name('publish_update_dbpub_data');
 });
 
 Route::group(['prefix' =>  '/intellectual', 'middleware' => ['guest' , 'counter']], function () {

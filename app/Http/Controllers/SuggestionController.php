@@ -11,8 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 use App\Model\Article;
 use App\Model\Conference;
+use App\Model\DbPub;
 use App\Model\Intelip;
 use App\Model\Fund;
+use App\Model\ProgressProject;
+use App\Model\SpecialRule;
 use DateTime;
 
 class SuggestionController extends Controller
@@ -59,7 +62,21 @@ class SuggestionController extends Controller
                 return $this->responseRedirectBack("ไม่สามารถเข้าถึงโครงการได้เนื่องจากหมดระยะเวลาแล้ว !", "warning");
             }
 
+            $progressproject = new ProgressProject();
+
             $projectData = Ptmain::where("topic_id" , '=' , $model->id )->where("create_by", "=", session("idcard"))->where("type_project", "!=", 3)->get();
+
+            foreach ($projectData as $el) {
+
+                if($el->type_res == null){
+                    $el['type_res_name'] = "";
+                }else{
+                    $el['type_res_name'] = $el->type_res == 1 ? "ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ" : "ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล";
+                }
+
+                $el['progress_project'] = $progressproject->GetComplete($el->id);
+            }
+
             return view("screen.suggestion.view", ["model" => $model, "projectData" => $projectData]);
         } else {
             return $this->responseRedirectBack("ไม่พบข้อมูลที่เรียกใช้งาน !", "warning");
@@ -126,6 +143,7 @@ class SuggestionController extends Controller
                         Conference::where("cpff_pt_id", "=", $item->id)->delete();
                         $this->ationClearFolder($item->id , $item->res_id);
                         FilesForce::where("cpff_pt_id", "=", $item->id)->delete();
+                        DbPub::where('dbpub_cpff_pt_id' , '=' , $item->id)->delete();
 
                     }
 
@@ -135,6 +153,7 @@ class SuggestionController extends Controller
                     Fund::where("cpff_pt_id", "=", $model->id)->delete();
                     Intelip::where("cpff_pt_id", "=", $model->id)->delete();
                     Conference::where("cpff_pt_id", "=", $model->id)->delete();
+                    DbPub::where('dbpub_cpff_pt_id' , '=' , $model->id)->delete();
 
                     $this->ationClearFolder($model->id , $model->res_id);
 
@@ -150,6 +169,7 @@ class SuggestionController extends Controller
                     Fund::where("cpff_pt_id", "=", $model->id)->delete();
                     Intelip::where("cpff_pt_id", "=", $model->id)->delete();
                     Conference::where("cpff_pt_id", "=", $model->id)->delete();
+                    DbPub::where('dbpub_cpff_pt_id' , '=' , $model->id)->delete();
 
                     $this->ationClearFolder($model->id , $model->res_id);
 
@@ -201,13 +221,56 @@ class SuggestionController extends Controller
             }
 
             if ($TopicModel) {
-                return view("screen.suggestion.create", ["model" => $TopicModel]);
+
+                // 07/28/2022
+                $relatedList = [
+                    "คณิตศาสตร์",
+                    "เคมี",
+                    "เครื่องกล",
+                    "ชีววิทยา",
+                    "ประมง",
+                    "พลังงาน",
+                    "พืช",
+                    "ฟิสิกส์",
+                    "ไฟฟ้า",
+                    "อิเล็กทรนิกส์",
+                    "แมลง",
+                    "โยธา",
+                    "โลจิสติกส์",
+                    "วัสดุ",
+                    "วิทยาศาสตร์สุขภาพ",
+                    "วิศวกรรมการแพทย์",
+                    "ศิลปกรรม",
+                    "สังคม/บริหาร",
+                    "ภาษาศาสตร์",
+                    "ท่องเที่ยว",
+                    "สัตวศาสตร์",
+                    "สิ่งแวดล้อม",
+                    "อาหาร",
+                    "อุตสาหการ",
+                    "ไอที",
+                    "อื่นๆ"
+                ];
+
+                return view("screen.suggestion.create", ["model" => $TopicModel , "relatedList" => $relatedList]);
             } else {
                 return $this->responseRedirectBack("ไม่พบข้อมูลที่เรียกใช้งาน !", "warning");
             }
         }
 
         try {
+
+            $special_rule = new SpecialRule();
+
+            if($special_rule->Checked_Project_TypeFund( $TopicModel->id , $request->type_res)){
+                return $this->responseRedirectBack("1 บัญชีสามารถส่งทุนได้ประเภทเดียวเท่านั้น หากคุณต้องการส่งทุนอื่น ให้ลบข้อมูลที่มีอยู่ออกก่อน", "warning");
+            }
+
+
+            if($special_rule->Checked_Project_TypeFund($request->type_res , $request->budget )){
+                return $this->responseRedirectBack("ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ สามารถเสนอของบประมาณได้ไม่เกิน 500,000 บาท", "warning");
+            }
+
             
             $model = new Ptmain();
             $model->topic_id = $TopicModel->id;
@@ -216,6 +279,7 @@ class SuggestionController extends Controller
             $model->type_project = $request->type_project;
             $model->budget = $request->budget;
             $model->related_fields = $request->related_fields;
+            $model->related_fields_other = $request->related_fields_other;
             $model->res_id = session("idcard");
 
             $model->time_startproject = 0; //ไม่ใช่รอทำการลบ
@@ -230,7 +294,7 @@ class SuggestionController extends Controller
 
             return redirect()->route("suggestion_view_page", ["id" => $request->id])->with(["message" => "สร้างโครงงานยื่นข้อเสนอเรียบร้อย", "status" => "success", "alert" => true]);
         } catch (\Throwable $th) {
-            //return response()->json($th->getMessage());
+            //return responseRequest($th->getMessage());
             return $this->responseRedirectBack("ไม่สามารถบันทึกข้อมูลได้ เกิดความผิดพลาดของระบบ กรุณาแจ้งเจ้าหน้าที่  !", "danger");
         }
     }

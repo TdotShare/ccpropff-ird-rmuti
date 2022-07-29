@@ -18,7 +18,7 @@ $breadcrumb = [
 
 @section('breadcrumb')
 
-@component('common.breadcrumb' , [ "name" => "$model->name_th - ภาพรวมข้อมูล" , "breadcrumb" => $breadcrumb])
+@component('common.breadcrumb' , [ "name" => "ภาพรวมข้อมูล" , "breadcrumb" => $breadcrumb])
 
 @endcomponent
 
@@ -161,28 +161,33 @@ $progressColor = "success";
                     <option value="1" {{$model->type_project == 1 ?  "selected" :  ""}}>ชุดโครงการ</option>
                     <option value="2" {{$model->type_project == 2 ?  "selected" :  ""}}>โครงการเดี่ยว</option>
                     @endif
-
                 </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>ประเภททุน</label>
+                <input type="text" class="form-control" name="type_res" value="{{$model->type_res_name}}" readonly >
             </div>
         </div>
 
+        @php
+        $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first();
+        @endphp
+        
+        @if ($resData)
 
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md">
                 <label>นักวิจัย (หัวหน้าโครงการ) </label>
-                <select class="selectpicker form-control" name="res_id" data-live-search="true" data-size="6"
-                    title="เลือกนักวิจัย (หัวหน้าโครงการ)" disabled>
-
-                    @php
-                    $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first()
-                    @endphp
-
-                    <option value="{{$resData->userIDCard}}" selected>
-                        {{$resData->titleName}}{{$resData->userRealNameTH}}
-                        {{$resData->userLastNameTH}} ( {{$resData->userID}} )</option>
-                </select>
+                <input type="text" class="form-control" name="res_id" 
+                value="{{$resData->titleName}}{{$resData->userRealNameTH}} {{$resData->userLastNameTH}}" readonly>
             </div>
         </div>
+            
+        @endif
+
+
+
+
 
         <hr>
 

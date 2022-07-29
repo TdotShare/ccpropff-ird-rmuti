@@ -35,17 +35,6 @@ class CounterPages
 
             $name_th = "ระบบยื่นเสนอขอรับทุนประเภท Fundamental Fund";
             $name_eng = "Fundamental Fund"; //ชื่อระบบ
-            // $model = Activity::where("ip_real", "=", $ip_real)
-            //     ->where("ip", "=", $request->ip())
-            //     ->where("name_eng", "=", $name_eng)
-            //     ->where("date_at", "=", date("Y-m-d"))
-            //     ->where("action", "=",  $request->url())
-            //     ->first();
-
-            // $model = Activity::where("ip_real", "=", $ip_real)
-            // ->where("ip", "=", $request->ip())
-            // ->where("name_eng", "=", $name_eng)
-            // ->first();
 
 
             $model = new Activity();

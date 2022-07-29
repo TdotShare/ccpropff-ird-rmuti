@@ -34,7 +34,6 @@ $breadcrumb = [
 
 @if (session('alert'))
 
-
 <div class="alert alert-{{session('status')}} alert-dismissible fade show" role="alert">
     {{ session('message') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -104,11 +103,11 @@ $breadcrumb = [
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label>งบประมาณ <span style="color: red;">****</span></label>
-                    <input type="number" class="form-control" name="budget" value="{{$model->budget}}" required>
+                    <input type="number" class="form-control" name="budget" value="{{$model->budget}}" readonly>
                 </div>
                 <div class="form-group col-md-6">
                     <label>สาขาที่เกี่ยวข้องของโครงการวิจัย</label>
-                    <input type="text" class="form-control" name="related_fields" value="{{$model->related_fields}}">
+                    <input type="text" class="form-control" name="related_fields" value="{{$model->related_fields}}" readonly>
                 </div>
             </div>
 
@@ -126,28 +125,28 @@ $breadcrumb = [
                 </div>
                 <div class="form-group col-md-6">
                     <label>ประเภทนักวิจัย</label>
-                    <input type="text" class="form-control" name="type_res" value="{{$model->type_res == 1 ? "นักวิจัยหน้าใหม่" : "นักวิจัยหน้าเก่า"}}" readonly >
+                    <input type="text" class="form-control" name="type_res" value="{{$model->type_res_name}}" readonly >
                 </div>
             </div>
 
-            {{-- <div class="form-row">
+            
+            @php
+            $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first();
+            @endphp
+            
+            @if ($resData)
+    
+            <div class="form-row">
                 <div class="form-group col-md-12">
-                    <label>นักวิจัย (หัวหน้าโครงการ) <span style="color: red;">****</span></label>
-                    <select class="custom-select" name="res_id" disabled>
-
-                        @php
-                        $resData = \App\Model\Researcher::where("userIDCard" , "=" , $model->res_id)->first()
-                        @endphp
-
-                        <option value="{{$resData->userIDCard}}" selected>
-                            {{$resData->titleName}}{{$resData->userRealNameTH}} {{$resData->userLastNameTH}} (
-                            {{$resData->userID}} )</option>
-
-
-
-                    </select>
+                    <label>นักวิจัย (หัวหน้าโครงการ) </label>
+                    <input type="text" class="form-control" name="res_id" 
+                    value="{{$resData->titleName}}{{$resData->userRealNameTH}} {{$resData->userLastNameTH}}" readonly>
                 </div>
-            </div> --}}
+            </div>
+                
+            @endif
+
+
 
 
         </div>
