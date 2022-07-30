@@ -143,7 +143,6 @@ class SuggestionController extends Controller
                         Conference::where("cpff_pt_id", "=", $item->id)->delete();
                         $this->ationClearFolder($item->id , $item->res_id);
                         FilesForce::where("cpff_pt_id", "=", $item->id)->delete();
-                        DbPub::where('dbpub_cpff_pt_id' , '=' , $item->id)->delete();
 
                     }
 
@@ -153,7 +152,6 @@ class SuggestionController extends Controller
                     Fund::where("cpff_pt_id", "=", $model->id)->delete();
                     Intelip::where("cpff_pt_id", "=", $model->id)->delete();
                     Conference::where("cpff_pt_id", "=", $model->id)->delete();
-                    DbPub::where('dbpub_cpff_pt_id' , '=' , $model->id)->delete();
 
                     $this->ationClearFolder($model->id , $model->res_id);
 
@@ -169,7 +167,6 @@ class SuggestionController extends Controller
                     Fund::where("cpff_pt_id", "=", $model->id)->delete();
                     Intelip::where("cpff_pt_id", "=", $model->id)->delete();
                     Conference::where("cpff_pt_id", "=", $model->id)->delete();
-                    DbPub::where('dbpub_cpff_pt_id' , '=' , $model->id)->delete();
 
                     $this->ationClearFolder($model->id , $model->res_id);
 
@@ -262,13 +259,19 @@ class SuggestionController extends Controller
 
             $special_rule = new SpecialRule();
 
-            if($special_rule->Checked_Project_TypeFund( $TopicModel->id , $request->type_res)){
-                return $this->responseRedirectBack("1 บัญชีสามารถส่งทุนได้ประเภทเดียวเท่านั้น หากคุณต้องการส่งทุนอื่น ให้ลบข้อมูลที่มีอยู่ออกก่อน", "warning");
+            $chk_rule = $special_rule->Checked_Project_TypeFund( $TopicModel->id , $request->type_res);
+            if($chk_rule['bypass']){
+                return $this->responseRedirectBack($chk_rule['msg'], "warning");
             }
 
+            $chk_rule = $special_rule->Checked_LimitBudget($request->type_res , $request->budget );
+            if($chk_rule['bypass']){
+                return $this->responseRedirectBack($chk_rule['msg'], "warning");
+            }
 
-            if($special_rule->Checked_Project_TypeFund($request->type_res , $request->budget )){
-                return $this->responseRedirectBack("ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ สามารถเสนอของบประมาณได้ไม่เกิน 500,000 บาท", "warning");
+            $chk_rule = $special_rule->Checked_LimitProject($TopicModel->id , $request->type_res);
+            if($chk_rule['bypass']){
+                return $this->responseRedirectBack($chk_rule['msg'], "warning");
             }
 
             

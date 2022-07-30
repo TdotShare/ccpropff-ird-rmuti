@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Model\Article;
 use App\Model\Conference;
-use App\Model\DbPub;
 use App\Model\FilesForce;
 use App\Model\Ptmain;
 use App\Model\Topic;
@@ -39,13 +38,11 @@ class PublishController extends Controller
 
             $articledata = Article::where("cpff_pt_id", "=", $model->id)->get();
             $conferencedata = Conference::where("cpff_pt_id", "=", $model->id)->get();
-            $dbpubdata = DbPub::where("dbpub_cpff_pt_id", "=", $model->id)->first();
 
             return view("screen.project.publish.index", [
                 "model" => $model,
                 "articledata" => $articledata,
                 "conferencedata" => $conferencedata,
-                "dbpubdata" => $dbpubdata
             ]);
 
         } else {
@@ -201,42 +198,6 @@ class PublishController extends Controller
             }
         } catch (\PDOException $th) {
             return $this->responseRedirectBack("ไม่สามารถบันทึกข้อมูลได้ ติดต่อเจ้าหน้าที่พัฒนาระบบ !", "danger");
-        }
-    }
-
-    public function actionUpdateDBPublish(Request $request)
-    {
-        $model = DbPub::where('dbpub_cpff_pt_id', '=', $request->dbpub_cpff_pt_id)->first();
-
-        $data = $request->all();
-
-        if ($model) {
-
-            if ($data['dbpub_name'] == "อื่นๆ") {
-                if ($data['dbpub_other'] == "") {
-                    return $this->responseRedirectBack("หากคุณเลือก อื่นๆ กรุณาระบุ ฐานข้อมูลสำหรับเช็คผลงานการเผยแพร่ของท่าน ที่จะให้ทางเจ้าหน้าที่ค้นหาด้วย !", "warning");
-                }
-            } else {
-                $data['dbpub_other'] = "";
-            }
-
-            $model->update($data);
-
-            return $this->responseRedirectBack("บันทึกข้อมูลเรียบร้อย !");
-        } else {
-
-
-            if ($data['dbpub_name'] == "อื่นๆ") {
-                if ($data['dbpub_other'] == "") {
-                    return $this->responseRedirectBack("หากคุณเลือก อื่นๆ กรุณาระบุ ฐานข้อมูลสำหรับเช็คผลงานการเผยแพร่ของท่าน ที่จะให้ทางเจ้าหน้าที่ค้นหาด้วย !", "warning");
-                }
-            } else {
-                $data['dbpub_other'] = "";
-            }
-
-            DbPub::create($request->all());
-
-            return $this->responseRedirectBack("บันทึกข้อมูลเรียบร้อย !");
         }
     }
 

@@ -46,97 +46,97 @@ $breadcrumb])
 @endif
 
 <div class="card">
-    <div class="card-body">
+        <div class="card-body">
 
-        <form action="{{ route("suggestion_create_data") }}" method="POST">
+            <form action="{{ route("suggestion_create_data") }}" method="POST">
 
-            {{ csrf_field() }}
+                {{ csrf_field() }}
 
-            <input type="hidden" value="{{$model->id}}" name="id">
+                <input type="hidden" value="{{$model->id}}" name="id">
 
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label>ชื่อโครงการ (ภาษาไทย) <span style="color: red;">****</span></label>
-                    <input type="text" class="form-control" name="name_th" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label>ชื่อโครงการ (อังกฤษ) <span style="color: red;">****</span></label>
-                    <input type="text" class="form-control" name="name_eng" required>
-                </div>
-            </div>
-
-
-            <div class="form-row">
-
-                <style>
-                    /* Chrome, Safari, Edge, Opera */
-                    input::-webkit-outer-spin-button,
-                    input::-webkit-inner-spin-button {
-                        -webkit-appearance: none;
-                        margin: 0;
-                    }
-
-                    /* Firefox */
-                    input[type=number] {
-                        -moz-appearance: textfield;
-                    }
-                </style>
-
-                <div class="form-group col-md">
-                    <label>งบประมาณ <span style="color: red;">****</span></label>
-                    <input type="number" class="form-control" name="budget" required>
-                </div>
-                <div class="form-group col-md">
-                    <label>สาขาที่เกี่ยวข้องของโครงการวิจัย <span style="color: red;">****</span></label>
-                    <select class="custom-select"  onchange="action_related_fields()" id="related_fields" name="related_fields" required>
-                        <option value="" selected>เลือกสาขาที่เกี่ยวข้องของโครงการวิจัย</option>
-                        @foreach ($relatedList as $el)
-                            <option value="{{$el}}" >{{$el}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div id="related_fields_other">
                 <div class="form-row">
-                    <div class="form-group col-md">
-                        <label>หากเลือกสาขาที่เกี่ยวข้องอื่นๆ โปรดระบุ <span style="color: red;">****</span></label>
-                        <input type="text" class="form-control" name="related_fields_other" value="-" required>
+                    <div class="form-group col-md-12">
+                        <label>ชื่อโครงการ (ภาษาไทย) <span style="color: red;">****</span></label>
+                        <input type="text" class="form-control" name="name_th" required>
                     </div>
                 </div>
-            </div>
 
-
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label>ประเภทโครงการ <span style="color: red;">****</span></label>
-                    <select class="custom-select" name="type_project" required>
-                        {{-- <option value="" selected>เลือกประเภทโครงการ</option> --}}
-                        {{-- <option value="1" disabled>ชุดโครงการ</option> --}}
-                        <option value="2" selected>โครงการเดี่ยว</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>ชื่อโครงการ (อังกฤษ) <span style="color: red;">****</span></label>
+                        <input type="text" class="form-control" name="name_eng" required>
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label>ประเภททุน <span style="color: red;">****</span></label>
-                    <select class="custom-select" name="type_res" required>
-                        <option value="" selected>เลือกประเภททุน</option>
-                        <option value="1" >ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ</option>
-                        <option value="2" >ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล</option>
-                    </select>
+
+
+                <div class="form-row">
+
+                    <style>
+                        /* Chrome, Safari, Edge, Opera */
+                        input::-webkit-outer-spin-button,
+                        input::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+
+                        /* Firefox */
+                        input[type=number] {
+                            -moz-appearance: textfield;
+                        }
+                    </style>
+
+                    <div class="form-group col-md">
+                        <label>งบประมาณ <span style="color: red;">****</span></label>
+                        <input type="number" class="form-control" name="budget" required>
+                    </div>
+                    <div class="form-group col-md">
+                        <label>สาขาที่เกี่ยวข้องของโครงการวิจัย <span style="color: red;">****</span></label>
+                        <select class="custom-select"  onchange="action_related_fields()" id="related_fields" name="related_fields" required>
+                            <option value="" selected>เลือกสาขาที่เกี่ยวข้องของโครงการวิจัย</option>
+                            @foreach ($relatedList as $el)
+                                <option value="{{$el}}" >{{$el}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
+
+                <div id="related_fields_other">
+                    <div class="form-row">
+                        <div class="form-group col-md">
+                            <label>โปรดระบุสาขาที่เกี่ยวข้องอื่นๆ <span style="color: red;">****</span></label>
+                            <input type="text" class="form-control" name="related_fields_other">
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>ประเภทโครงการ <span style="color: red;">****</span></label>
+                        <select class="custom-select" name="type_project" required>
+                            {{-- <option value="" selected>เลือกประเภทโครงการ</option> --}}
+                            {{-- <option value="1" disabled>ชุดโครงการ</option> --}}
+                            <option value="2" selected>โครงการเดี่ยว</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>ประเภททุน <span style="color: red;">****</span></label>
+                        <select class="custom-select" name="type_res" required>
+                            <option value="" selected>เลือกประเภททุน</option>
+                            <option value="1" >ทุนวิจัยเพื่อความเป็นเลิศทางวิชาการ</option>
+                            <option value="2" >ทุนวิจัยเพื่อพัฒนาองค์ความรู้ เทคโนโลยีและนวัตกรรมสู่สากล</option>
+                        </select>
+                    </div>
+                </div>
 
 
 
 
-<button type="submit" class="btn btn-primary">สร้าง</button>
-</form>
+             <button type="submit" class="btn btn-primary">สร้าง</button>
+    </form>
 
-</div>
+    </div>
 </div>
 
 @endsection
@@ -151,12 +151,14 @@ $breadcrumb])
 $(function () {
     $('selectpicker').selectpicker();
     $('#related_fields_other').hide()
-
-    function action_related_fields() {
-        let related_fields =  $("#related_fields").val();
-        console.log(related_fields)
-    }
 });
+
+function action_related_fields () {
+        let related_fields =  $("#related_fields").val();
+        if(related_fields == "อื่นๆ"){
+            $('#related_fields_other').show()
+        }
+}
 
 </script>
 

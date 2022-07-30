@@ -158,6 +158,11 @@ $progressColor = "success";
             </div>
         </div>
 
+        @php
+            $related_fields_other = $model->related_fields_other ? "($model->related_fields_other)" : "";
+            $related_text = $model->related_fields . " " . $related_fields_other;
+        @endphp
+
 
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -167,8 +172,7 @@ $progressColor = "success";
             </div>
             <div class="form-group col-md-6">
                 <label>สาขาที่เกี่ยวข้องของโครงการวิจัย</label>
-                <input type="text" class="form-control" name="related_fields" value="{{$model->related_fields}}"
-                    readonly>
+                <input type="text" class="form-control" name="related_fields" value="{{$related_text}}" readonly>
             </div>
         </div>
 

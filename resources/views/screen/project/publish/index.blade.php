@@ -59,6 +59,10 @@ $breadcrumb])
 
 @endif
 
+@php
+$listDbPub = ['Scopus' , 'Web of Science' , 'SCImago Journal Rank' , 'TCI' , 'อื่นๆ']  
+@endphp
+
 <div class="table-responsive">
     <table class="table table-striped" style="width: 100%;">
         <thead>
@@ -182,76 +186,6 @@ $breadcrumb])
         </div>
     </div>
 </div>
-
-<div class="card">
-    <div class="card-header text-white bg-dark">
-        ฐานข้อมูลสำหรับตรวจสอบข้อมูลการเผยแพร่ผลงาน
-    </div>
-    <div class="card-body">
-
-        <span style="color: red;">คำชี้แจง : เพื่อประโยชน์สูงสุดในการตรวจสอบข้อมูลของท่าน ขอความกรุณาระบุฐานข้อมูลสำหรับเช็คผลงานการเผยแพร่ของท่าน</span>
-        
-        <div style="padding-bottom: 1%;"></div>
-
-        @php
-          $listDbPub = ['Scopus' , 'Web of Science' , 'SCImago Journal Rank' , 'TCI' , 'อื่นๆ']  
-        @endphp
-
-        <form action="{{route("publish_update_dbpub_data")}}" method="post">
-
-            {{ csrf_field() }}
-
-            <input type="hidden" class="form-control" name="dbpub_cpff_pt_id" value="{{$model->id}}" required>
-
-            @if ($dbpubdata)
-
-            <div class="form-row">
-                <div class="form-group col-md">
-                    <select name="dbpub_name" class="custom-select" required>
-                        <option value="" >โปรดเลือกฐานข้อมูลสำหรับเช็คผลงานการเผยแพร่ของท่าน</option>
-                        @foreach ($listDbPub as $item)
-                            @if ($dbpubdata->dbpub_name == $item)
-                                <option value="{{$item}}" selected>{{$item}}</option>
-                            @else
-                                <option value="{{$item}}">{{$item}}</option>
-                            @endif
-                            
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-                
-            @else
-
-            <div class="form-row">
-                <div class="form-group col-md">
-                    <select name="dbpub_name" class="custom-select" required>
-                        <option value="" selected>โปรดเลือกฐานข้อมูลสำหรับเช็คผลงานการเผยแพร่ของท่าน</option>
-                        @foreach ($listDbPub as $item)
-                            <option value="{{$item}}">{{$item}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-                
-            @endif
-
-            <div class="form-row">
-                <div class="form-group col-md">
-                  <label >เลือก อื่นๆ โปรดระบุ</label>
-                  <input name="dbpub_other" type="text" value="{{$dbpubdata ? $dbpubdata->dbpub_other : '' }}" class="form-control">
-                </div>
-            </div>
-    
-            <button type="submit" class="btn btn-success btn-block">บันทึก</button>
-
-        </form>
-
-
-
-    </div>
-</div>
-
 
 <!-- สร้างข้อมูลการตีพิมพ์ -->
 <div class="modal fade" id="publishedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -433,8 +367,12 @@ $breadcrumb])
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <script>
-    $("#quartile_national").hide();
-    $("#quartile_international").hide();
+
+    $(function () {
+        $("#quartile_national").hide();
+        $("#quartile_international").hide();
+    });
+
 
     function setQuartile() {
 

@@ -7,7 +7,7 @@ $breadcrumb = [
     [ "name" => "หน้าหลัก" , "url" => route("suggestion_index_page") ],
     [ "name" => "$model->name_th" , "url" => route("project_view_page" , ["id" => $model->id]) ],
     [ "name" => "ประวัติการได้รับทุนวิจัย" , "url" => null ],
-]
+];
 
 ?>
 
@@ -16,25 +16,20 @@ $breadcrumb = [
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-
 @endsection
 
 @section('breadcrumb')
 
-@component('common.breadcrumb' , [ "name" => "ประวัติการได้รับทุนวิจัย" , "breadcrumb" =>
-$breadcrumb])
+    @component('common.breadcrumb' , [ "name" => "ประวัติการได้รับทุนวิจัย" , "breadcrumb" => $breadcrumb])
 
-@endcomponent
+    @endcomponent
 
 @endsection
 
 
-<!-- CONTENT -->
-
 @section('content')
 
 @if (session('alert'))
-
 
 <div class="alert alert-{{session('status')}} alert-dismissible fade show" role="alert">
     {{ session('message') }}
@@ -67,6 +62,21 @@ $breadcrumb])
         </thead>
     </table>
 </div>
+
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 
 <div style="padding-bottom: 1%;"></div>
 
@@ -103,20 +113,6 @@ $breadcrumb])
                     </select>
                 </div>
 
-                <style>
-                    /* Chrome, Safari, Edge, Opera */
-                    input::-webkit-outer-spin-button,
-                    input::-webkit-inner-spin-button {
-                        -webkit-appearance: none;
-                        margin: 0;
-                    }
-
-                    /* Firefox */
-                    input[type=number] {
-                        -moz-appearance: textfield;
-                    }
-                </style>
-
                 <div class="form-group col-md">
                     <label>งบประมาณ (บาท)</label>
                     <input type="number" class="form-control" name="budget" required>
@@ -126,26 +122,23 @@ $breadcrumb])
                     <label>ปีงบประมาณ <span style="color: red;"></span></label>
                     <select class="custom-select" name="year" required>
                         <option value="2561" selected>2561</option>
-                        @for ($i = 2562; $i <= date("Y") + 543; $i++) <option value="{{$i}}">{{$i}}</option>
-                            @endfor
+                        @for ($i = 2562; $i <= date("Y") + 543; $i++)<option value="{{$i}}">{{$i}}</option>@endfor
                     </select>
                 </div>
 
                 <div class="form-group col-md-12">
-                    <label>เอกสารแนบ </label>
-                    <small style="color: red;">กรณีที่ท่านมีโครงการวิจัยที่กำลังดำเนินการในปี งปม.2565 ต้องแนบหนังสือรับรองยืนยันการปิดทุนในระบบด้วย </small>
-                    <input type="file" name="file_fund" class="form-control" accept=".pdf">
+                    <label>เอกสารแนบ  <small style="color: red;">กรณีที่ท่านมีโครงการวิจัยที่กำลังดำเนินการในปี งปม.2565 ต้องแนบหนังสือรับรองยืนยันการปิดทุนในระบบด้วย </small></label>
+                    <input type="file" name="file_fund" class="form-control" accept=".pdf" />
                 </div>
+            </div>
 
-                <button class="btn btn-outline-primary btn-block"><i class="fas fa-plus"></i> เพิ่มข้อมูล</button>
+                <button type="submit" class="btn btn-outline-primary btn-block"> <i class="fas fa-plus"></i> เพิ่มข้อมูล</button>
+
         </form>
 
-    </div>
-</div>
+        <div style="padding-bottom: 1%;"></div>
 
 
-<div class="card">
-    <div class="card-body">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -174,16 +167,42 @@ $breadcrumb])
                         <td>{{number_format($item->budget)}}</td>
                         <td>{{$item->year}}</td>
                         <td>@if ($item->file) <a target="_blank" href="{{URL::asset("upload/fund/$model->id-$model->res_id/$item->file")}}">{{$item->file}}</a> @endif </td>
-                        <td><a href="{{route("fund_delete_data" , ["id" => $item->id ])}}"  onclick="return confirm('คุณต้องการลบข้อมูล ใช่หรือไม่ ?');"> <button
-                                    class="btn btn-block btn-danger"><i class="fas fa-trash"></i>
-                                    ลบข้อมูล</button></a></td>
+                        <td><a href="{{route("fund_delete_data" , ["id" => $item->id ])}}"  onclick="return confirm('คุณต้องการลบข้อมูล ใช่หรือไม่ ?');"> <button class="btn btn-block btn-danger"><i class="fas fa-trash"></i> ลบข้อมูล</button></a></td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
+
+
+@if (count($funddata) > 0)
+
+<div class="card">
+    <div class="card-header">หนังสือรับรองการได้รับทุน</div>
+    <div class="card-body">
+
+        <form action="" method="post" enctype="multipart/form-data" >
+
+            {{ csrf_field() }}
+
+            <div class="form-group col-md-12">
+                <label>เอกสารแนบ</label>
+                <input type="file" name="file_fund_confirm" class="form-control" accept=".pdf" />
+            </div>
+
+            <button class="btn btn-outline-primary btn-block" disabled >บันทึกข้อมูล</button>
+
+        </form>
+
+    </div>
+</div>
+    
+@endif
+
+
 
 @endsection
 
